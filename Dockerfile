@@ -26,10 +26,11 @@ RUN mkdir -p ~/rpmbuild/{BUILD,RPMS,SOURCES,SRPMS,SPECS}
 
 # Compile SANE Backend.
 RUN cd ~ \
-	&& git clone https://gitlab.com/sane-project/backends.git sane-backends \
-	&& cd sane-backends \
-	&& ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var  --enable-avahi BACKENDS="kodakaio test" \
-	&& make
+    && git clone https://gitlab.com/sane-project/backends.git sane-backends \
+    && cd sane-backends \
+    && git checkout RELEASE_1_0_27 \
+    && ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var  --enable-avahi BACKENDS="kodakaio test" \
+    && make
 
 # Create a symbolic link for backend develop.
 RUN cd /root/sane-backends/backend \
