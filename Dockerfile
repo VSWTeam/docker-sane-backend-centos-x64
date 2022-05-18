@@ -28,10 +28,16 @@ RUN yum install -y auto{conf,make} ctags elfutils gcc{,-c++} gettext intltool li
 # EXPOSE 22
 # RUN systemctl enable sshd
 
+# Use gcc 7
+RUN mv /usr/bin/gcc /usr/bin/gcc-4.8.5 \
+    && ln -s /opt/rh/devtoolset-7/root/bin/gcc /usr/bin/gcc \
+    && mv /usr/bin/g++ /usr/bin/g++-4.8.5 \
+    && ln -s /opt/rh/devtoolset-7/root/bin/g++ /usr/bin/g++
+
 # Update libtool
 RUN cd ~ \
     && yum remove -y libtool \
-    && curl -O http://mirrors.ustc.edu.cn/gnu/libtool/libtool-2.4.6.tar.gz \
+    && curl -O https://ftp.gnu.org/gnu/libtool/libtool-2.4.6.tar.gz \
     && tar zxvf libtool-2.4.6.tar.gz \
     && cd libtool-2.4.6 \
     && ./configure --prefix=/usr \
@@ -55,10 +61,6 @@ RUN cd /root/sane-backends/backend \
 
 # Support Conan package
 RUN pip3 install --upgrade pip && pip3 install --no-cache-dir conan
-
-# scl enable devtoolset-7 bash
-RUN echo "source /opt/rh/devtoolset-7/enable" >> /etc/bashrc
-SHELL ["/bin/bash", "--login", "-c"]
 
 # Set environment variables.
 ENV HOME /root
