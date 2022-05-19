@@ -14,6 +14,7 @@ RUN yum install -y auto{conf,make} ctags elfutils gcc{,-c++} gettext intltool li
     && yum install -y python3-pip python3-setuptools \
     && yum install -y centos-release-scl \
     && yum install -y devtoolset-7-gcc* \
+    && yum install -y lftp \
     # && yum install -y openssh openssh-server openssh-clients \
     && yum clean all
 
